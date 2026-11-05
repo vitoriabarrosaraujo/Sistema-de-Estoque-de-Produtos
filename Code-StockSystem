@@ -1,0 +1,54 @@
+codigos_existentes = []
+estoque = []
+quantidade_total_itens = []
+
+def verificar_codigo():
+  codigo_prod = int(input('Digite o código do produto: '))
+  if codigo_prod in codigos_existentes:
+    print('\nJÁ EXISTE UM PRODUTO COM ESSE CÓDIGO NO ESTOQUE. TENTE NOVAMENTE.\n')
+    verificar_codigo()
+  else:
+    codigos_existentes.append(codigo_prod)
+    cadastrar_novo_prod(codigo_prod)
+
+def cadastrar_novo_prod(codigo_prod):
+    nome_prod = input('Nome do produto: ')
+    preco_prod = float(input('Preço do produto: '))
+    quantidade_prod = int(input('Quantidade do produto: '))
+    if preco_prod <= 0 or quantidade_prod <= 0:
+      print('\nINFORMAÇÕES INCORRETAS. TENTE NOVAMENTE.\n')
+      cadastrar_novo_prod(codigo_prod)
+    else:
+      novo_produto = {'Código:':codigo_prod,
+                    'Nome:':nome_prod,
+                    'Preço:':preco_prod,
+                    'Quantidade:':quantidade_prod}
+      estoque.append(novo_produto)
+      quantidade_total_itens.append(quantidade_prod)
+      print(f'\n{nome_prod} FOI CADASTRADO COM SUCESSO.')
+      menu()
+
+
+def mostrar_total():
+  soma_total_estoque = sum(quantidade_total_itens)
+  print('\n-------------------------------------------------------------------')
+  print('A QUANTIDADE TOTAL DE PRODUTOS NO ESTOQUE É: ', soma_total_estoque)
+  print('-------------------------------------------------------------------')
+
+def menu():
+  print('\n-------------------------------------------------------------------')
+  print('MENU:\n')
+  print('1 = Cadastrar novo produto.')
+  print('2 = Calcular total de produtos no estoque.')
+  resposta_menu = int(input('Digite o número da opção desejada: '))
+  if resposta_menu == 1:
+    verificar_codigo()
+  elif resposta_menu == 2:
+    mostrar_total()
+    menu()
+  else:
+    print('\nOPÇÃO INDISPONÍVEL. TENTE NOVAMENTE.')
+    menu()
+
+print('Olá. Vamos começar!')
+menu()
